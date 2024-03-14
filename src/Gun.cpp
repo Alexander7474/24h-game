@@ -71,7 +71,6 @@ void Gun::tirer(){ // a appeler dans une boucle :
         if (anim_state == 2){
             for (int i = 0; i < (max_capacite-capacite_actuelle); i++){
                 balles[i].update();
-                balles[i].push_back(/*nom de la Bullet*/);
             }
         }
     }
