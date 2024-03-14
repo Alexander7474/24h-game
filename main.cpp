@@ -1,10 +1,13 @@
 /////////////////////////////
 //GAME SKELETON
 /////////////////////////////
+#include <BBOP/Graphics/sceneClass.h>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <BBOP/Graphics.h>
 #include <irrKlang/irrKlang.h>
+
+#include "include/Car.h"
 
 int main () {
   GLFWwindow *window;
@@ -12,10 +15,11 @@ int main () {
   ////////////////////////////////////////
   ///Game var and obj
   ////////////////////////////////////////
+  
+  Scene defaultScene;
 
-
-
-
+  Car test("img/", Vector2f(0.0f,0.0f), 0.0f, 50.0f);
+  
 
   ////////////////////////////////////////
   ///End var and obj
@@ -27,8 +31,8 @@ int main () {
     ///Game loop start
     ///////////////////////////////////////////////
 
-
-
+    defaultScene.Use();
+    defaultScene.Draw(test);
 
     ///////////////////////////////////////////////
     ///Game loop end
