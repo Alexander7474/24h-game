@@ -2,7 +2,7 @@
 #include <GLFW/glfw3.h>
 
 Game::Game()
-  : player("img/bleu_car", Vector2f(100.0f,100.0f), 0.0f, 0.5f)
+  : player("img/bleu_car", Vector2f(100.0f,100.0f), 0.0f, 0.2f)
 {
   Bot bot("img/bleu_car", Vector2f(250.0f,250.0f), 0.5f);
   bots.push_back(bot);
