@@ -13,7 +13,7 @@
 static bool initialized = false;
 
 Obstacle::Obstacle()
-    : obs(Texture("img/obs1.png"))
+    : obs(Texture("img/map/obstacles/obs1.png"))
 {
     if (!initialized) {
         std::srand(time(NULL));
