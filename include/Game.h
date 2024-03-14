@@ -7,6 +7,10 @@
 #include <BBOP/Graphics.h>
 #include <vector>
 
+#include "Map.h"
+#include "Car.h"
+#include "Bot.h"
+
 class Game : public BbopDrawable 
 {
 public:
