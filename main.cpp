@@ -1,0 +1,46 @@
+/////////////////////////////
+//GAME SKELETON
+/////////////////////////////
+#include <BBOP/Graphics/bbopFunc.h>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <BBOP/Graphics.h>
+#include <irrKlang/irrKlang.h>
+
+int main () {
+  GLFWwindow *window;
+  bbopInit(1920, 1080, "24h game", window);
+  ////////////////////////////////////////
+  ///Game var and obj
+  ////////////////////////////////////////
+
+
+
+
+
+  ////////////////////////////////////////
+  ///End var and obj
+  ////////////////////////////////////////
+
+  while(glfwWindowShouldClose(window)){
+    bbopCleanWindow(window, Vector3i(0,0,0), 1.0f);
+    ///////////////////////////////////////////////
+    ///Game loop start
+    ///////////////////////////////////////////////
+
+
+
+
+    ///////////////////////////////////////////////
+    ///Game loop end
+    ///////////////////////////////////////////////
+
+    bbopErrorCheck();
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+  }
+
+  glfwDestroyWindow(window);
+  glfwTerminate();
+  return 0;
+}
