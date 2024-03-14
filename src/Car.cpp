@@ -14,7 +14,8 @@ Car::Car(std::string new_fold_name, Vector2f new_position, float new_rotation, f
     state(0),
     deplacement(0.0f,0.0f),
     anim_state(0),
-    sprite("img/bleu_car/100/0.png")
+    sprite("img/bleu_car/100/0.png"),
+    life(100.0f)
 {
   //chargement des Texture
   for(int i = 0; i < 1; i++){
@@ -41,6 +42,7 @@ Car::Car(std::string new_fold_name, Vector2f new_position, float new_rotation, f
     Texture toadd(filename.c_str());
     textures[3].push_back(toadd);
   }
+  sprite.setOrigin(Vector2f(sprite.getSize().x/2.0f,sprite.getSize().y/2.0f));
 }
 
 void Car::accelerate()
@@ -48,7 +50,6 @@ void Car::accelerate()
   float angle = rotation+M_PI/2.0f;
   Vector2f dep(cos(angle),sin(angle));
   speed.x+=dep.x*max_speed;speed.y+=dep.y*max_speed;
-  std::cout << speed.x << speed.y << std::endl;
 }
 
 void Car::decelerate()
@@ -56,7 +57,6 @@ void Car::decelerate()
   float angle = rotation+M_PI/2.0f;
   Vector2f dep(cos(angle),sin(angle));
   speed.x-=dep.x*max_speed_reverse;speed.y-=dep.y*max_speed_reverse;
-  std::cout << speed.x << speed.y << std::endl;
 }
 
 void Car::go_right()
@@ -73,10 +73,10 @@ void Car::update()
 {
   speed.x*=0.95f;speed.y*=0.95f;
   anim_state++;
-  if(anim_state > textures[state].size())
+  sprite.move(speed);
+  if(anim_state >= static_cast<int>(textures[state].size()*7))
     anim_state = 0;
-  sprite.setTexture(textures[state][anim_state]);
-  sprite.setPosition(pos);
+  sprite.setTexture(textures[state][anim_state/7]);
   sprite.setRotation(rotation);
 }
 
@@ -93,4 +93,14 @@ Vector2f Car::get_pos()
 float Car::get_rotation()
 {
   return rotation;
+}
+
+void Car::set_state(int new_state)
+{
+  state = new_state;
+}
+
+int Car::get_state()
+{
+  return state;
 }

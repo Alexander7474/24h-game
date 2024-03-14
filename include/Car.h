@@ -18,6 +18,8 @@ public:
   void go_right();
   Vector2f get_pos();
   float get_rotation();
+  void set_state(int new_state);
+  int get_state();
 
   void Draw(GLint renderModLoc) const override;
   void update();
@@ -33,4 +35,5 @@ private:
   Vector2f deplacement;
   int anim_state;
   Sprite sprite;
+  float life;
 };
