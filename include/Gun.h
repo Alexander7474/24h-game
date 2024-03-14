@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <BBOP/Graphics.h>
 #include <cmath>
+#include "Car.h"
 
 class Bullet : public BbopDrawable
 {
@@ -18,8 +19,6 @@ class Bullet : public BbopDrawable
         void update();
 
         void Draw(GLint renderModeLoc) const override;
-
-        ~Bullet();
 };
 
 class Gun : public BbopDrawable
@@ -45,10 +44,8 @@ class Gun : public BbopDrawable
         float get_rotation();
         Vector2f get_position();
         std::vector<Bullet> get_bullet();
-        void update();
+        void update(Car);
         int anim_state = 0;
 
         void Draw(GLint renderModeLoc) const override;
-
-        ~Gun();
 };
