@@ -16,12 +16,11 @@ public:
   void decelerate();
   void go_left();
   void go_right();
-  void set_pos();
   Vector2f get_pos();
-  void set_rotation();
   float get_rotation();
 
   void Draw(GLint renderModLoc) const override;
+  void update();
 private: 
   std::vector<Sprite> sprites;
   Vector2f pos;
@@ -31,4 +30,5 @@ private:
   float max_speed_reverse;
   std::string fold_name;
   int state;
+  Vector2f deplacement;
 };

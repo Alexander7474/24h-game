@@ -1,16 +1,18 @@
 #include "../include/Car.h"
 #include <BBOP/Graphics/bbopMathClass.h>
+#include <cmath>
 #include <string>
 
 #include <iostream>
 
 Car::Car(std::string new_fold_name, Vector2f new_position, float new_rotation, float new_max_speed)
-  : fold_name(new_fold_name),
-    pos(new_position),
+  : pos(new_position),
     rotation(new_rotation),
     max_speed(new_max_speed),
     max_speed_reverse(new_max_speed),
-    state(0)
+    fold_name(new_fold_name),
+    state(0),
+    deplacement(0.0f,0.0f)
 {
   int imgn = 100;
   for(int i = 0; i < 4 ; i++){
@@ -26,7 +28,50 @@ Car::Car(std::string new_fold_name, Vector2f new_position, float new_rotation, f
   }
 }
 
+void Car::accelerate()
+{
+  float angle = rotation+M_PI/2.0f;
+  Vector2f dep(cos(angle),sin(angle));
+  speed.x+=dep.x*max_speed;speed.y+=dep.y*max_speed;
+  std::cout << speed.x << speed.y << std::endl;
+}
+
+void Car::decelerate()
+{
+  float angle = rotation+M_PI/2.0f;
+  Vector2f dep(cos(angle),sin(angle));
+  speed.x-=dep.x*max_speed;speed.y-=dep.y*max_speed;
+  std::cout << speed.x << speed.y << std::endl;
+}
+
+void Car::go_right()
+{
+  rotation+=0.1f;
+}
+
+void Car::go_left()
+{
+  rotation-=0.1f;
+}
+
+void Car::update()
+{
+  speed.x*=0.95f;speed.y*=0.95f;
+  sprites[state].move(speed);
+  sprites[state].setRotation(rotation);
+}
+
 void Car::Draw(GLint renderModLoc) const
 {
   sprites[state].Draw(renderModLoc);
+}
+
+Vector2f Car::get_pos()
+{
+  return pos;
+}
+
+float Car::get_rotation()
+{
+  return rotation;
 }
