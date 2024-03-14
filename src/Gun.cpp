@@ -134,13 +134,16 @@ void Bullet::update(){
     deplacement();
 }
 
-void Gun::Draw(GLint renderModLoc) const
+void Bullet::Draw(GLint renderModeLoc) const
 {
-  gun.Draw(renderModLoc);
+    bullet.Draw(renderModeLoc);
 }
 
-Gun::~Gun(){
-    delete [] textures;
+void Gun::Draw(GLint renderModeLoc) const
+{
+  gun.Draw(renderModeLoc);
 }
+
+Gun::~Gun(){}
 
 Bullet::~Bullet(){}
