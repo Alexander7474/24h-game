@@ -12,6 +12,12 @@ class Obstacle:public BbopDrawable
 {
 private:
     Sprite obs;
+    int x;
+    int y;
+    int offsetx = 200 ;
+    int offsety = 150 ;
+    int random_pos_x;
+    int random_pos_y;
 public:
     Obstacle();
     Sprite *get_sprite();
@@ -20,6 +26,14 @@ public:
 
 };
 
+
+class Box:public BbopDrawable
+{
+public:
+    Box();
+    virtual void Draw(GLint renderModeLoc) const override;
+
+};
 
 
 class Map:public BbopDrawable
