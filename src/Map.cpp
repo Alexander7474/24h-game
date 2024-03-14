@@ -33,7 +33,7 @@ Sprite *Obstacle::get_sprite()
 Map::Map()
   : map_s(Texture("img/map/map.png"))
 {
-    int random_number = rand() % 100 + 1; 
+    int random_number = rand() % 10 + 10; 
     for (int i = 0; i < random_number; i++)
     {
         Obstacle ob;
