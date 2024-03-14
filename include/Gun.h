@@ -44,6 +44,7 @@ class Gun : public BbopDrawable
         void set_position(Vector2f);
         float get_rotation();
         Vector2f get_position();
+        std::vector<Bullet> get_bullet();
         void update();
         int anim_state = 0;
 
