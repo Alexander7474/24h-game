@@ -13,7 +13,6 @@ class Bullet : public BbopDrawable
         Vector2f direction;
         float vitesse;
         Sprite bullet;
-        CollisionBox balle;
         Bullet();
         void deplacement();
         void update();
@@ -33,7 +32,7 @@ class Gun : public BbopDrawable
         Gun();
         Gun(float, Vector2f);
         std::vector<Texture> textures[2];
-        std::vector<Bullet> balles[250];
+        std::vector<Bullet> balles;
         Texture base;
         Sprite gun;
         void tirer();
