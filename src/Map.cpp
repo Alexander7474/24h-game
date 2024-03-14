@@ -47,7 +47,7 @@ Map::Map()
 
 }
 
-Map::get_obst(list_obst)
+std::vector<Obstacle> Map::get_obst()
 {
     return list_obst;
 }
