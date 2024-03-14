@@ -1,5 +1,3 @@
-#pragma once 
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <BBOP/Graphics.h>
@@ -32,9 +30,6 @@ Map::Map()
     }
 
     map_s.setSize(Vector2f(BBOP_WINDOW_SIZE.x, BBOP_WINDOW_SIZE.y));
-
-
-
 
 }
 
