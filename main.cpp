@@ -1,7 +1,6 @@
 /////////////////////////////
 //GAME SKELETON
 /////////////////////////////
-#include <BBOP/Graphics/bbopFunc.h>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <BBOP/Graphics.h>
