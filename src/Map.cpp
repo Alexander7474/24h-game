@@ -21,7 +21,6 @@ Obstacle::Obstacle()
     }
     random_pos_x = rand() % (BBOP_WINDOW_SIZE.x - offsetx*2) + offsetx;
     random_pos_y = rand() % (BBOP_WINDOW_SIZE.y - offsety*2) + offsety;
-    std::cout<<random_pos_x << "." <<random_pos_y << std::endl;
     obs.setPosition(Vector2f(random_pos_x, random_pos_y));
 }
 
@@ -46,6 +45,11 @@ Map::Map()
 
 
 
+}
+
+Map::get_obst(list_obst)
+{
+    return list_obst;
 }
 
 void Obstacle::Draw(GLint renderModeLoc) const
