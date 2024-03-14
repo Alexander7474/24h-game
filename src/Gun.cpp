@@ -32,16 +32,16 @@ Gun::Gun(float gun_rotation, Vector2f gun_position)
     gun.setSize(Vector2f(40.0f, 59.0f));
 
     for(int i = 0; i < 6; i++){
-    std::string filename = "/img/gunshot/gunshot" + std::to_string(i) + ".png";
-    std::cout << filename << std::endl;
-    Texture toadd(filename.c_str());
-    textures[0].push_back(toadd);
+        std::string filename = "/img/gunshot/gunshot" + std::to_string(i) + ".png";
+        std::cout << filename << std::endl;
+        Texture toadd(filename.c_str());
+        textures[0].push_back(toadd);
     }
     for(int i = 0; i < 6; i++){
-    std::string filename = "/img/reload/reload" + std::to_string(i) + ".png";
-    std::cout << filename << std::endl;
-    Texture toadd(filename.c_str());
-    textures[1].push_back(toadd);
+        std::string filename = "/img/reload/reload" + std::to_string(i) + ".png";
+        std::cout << filename << std::endl;
+        Texture toadd(filename.c_str());
+        textures[1].push_back(toadd);
     }
 }
 
@@ -123,6 +123,10 @@ float Gun::get_rotation(){
 
 Vector2f Gun::get_position(){
     return(position);
+}
+
+std::vector<Bullet> Gun::get_bullet(){
+    return(balles);
 }
 
 void Gun::update(){
