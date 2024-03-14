@@ -9,22 +9,37 @@ Car::Car(std::string new_fold_name, Vector2f new_position, float new_rotation, f
   : pos(new_position),
     rotation(new_rotation),
     max_speed(new_max_speed),
-    max_speed_reverse(new_max_speed),
+    max_speed_reverse(new_max_speed/3.0f),
     fold_name(new_fold_name),
     state(0),
-    deplacement(0.0f,0.0f)
+    deplacement(0.0f,0.0f),
+    anim_state(0),
+    sprite("img/bleu_car/100/0.png")
 {
-  int imgn = 100;
-  for(int i = 0; i < 4 ; i++){
-    if(i == 3)
-      imgn = 0;
-    std::string filename = fold_name + "/" + std::to_string(imgn) + "/0.png";
+  //chargement des Texture
+  for(int i = 0; i < 1; i++){
+    std::string filename = fold_name + "/100/" + std::to_string(i) + ".png";
     std::cout << filename << std::endl;
-    Sprite toadd(Texture(filename.c_str()), pos);
-    toadd.setSize(Vector2f(50.0f,50.0f));
-    toadd.setOrigin(Vector2f(toadd.getSize().x/2.0f,toadd.getSize().y/2.0f));
-    sprites.push_back(toadd);
-    imgn = imgn/2;
+    Texture toadd(filename.c_str());
+    textures[0].push_back(toadd);
+  }
+  for(int i = 0; i < 3; i++){
+    std::string filename = fold_name + "/50/" + std::to_string(i) + ".png";
+    std::cout << filename << std::endl;
+    Texture toadd(filename.c_str());
+    textures[1].push_back(toadd);
+  }
+  for(int i = 0; i < 8; i++){
+    std::string filename = fold_name + "/25/" + std::to_string(i) + ".png";
+    std::cout << filename << std::endl;
+    Texture toadd(filename.c_str());
+    textures[2].push_back(toadd);
+  }
+  for(int i = 0; i < 3; i++){
+    std::string filename = fold_name + "/0/" + std::to_string(i) + ".png";
+    std::cout << filename << std::endl;
+    Texture toadd(filename.c_str());
+    textures[3].push_back(toadd);
   }
 }
 
@@ -40,7 +55,7 @@ void Car::decelerate()
 {
   float angle = rotation+M_PI/2.0f;
   Vector2f dep(cos(angle),sin(angle));
-  speed.x-=dep.x*max_speed;speed.y-=dep.y*max_speed;
+  speed.x-=dep.x*max_speed_reverse;speed.y-=dep.y*max_speed_reverse;
   std::cout << speed.x << speed.y << std::endl;
 }
 
@@ -57,13 +72,17 @@ void Car::go_left()
 void Car::update()
 {
   speed.x*=0.95f;speed.y*=0.95f;
-  sprites[state].move(speed);
-  sprites[state].setRotation(rotation);
+  anim_state++;
+  if(anim_state > textures[state].size())
+    anim_state = 0;
+  sprite.setTexture(textures[state][anim_state]);
+  sprite.setPosition(pos);
+  sprite.setRotation(rotation);
 }
 
 void Car::Draw(GLint renderModLoc) const
 {
-  sprites[state].Draw(renderModLoc);
+  sprite.Draw(renderModLoc);
 }
 
 Vector2f Car::get_pos()

@@ -22,7 +22,7 @@ public:
   void Draw(GLint renderModLoc) const override;
   void update();
 private: 
-  std::vector<Sprite> sprites;
+  std::vector<Texture> textures[4];
   Vector2f pos;
   float rotation;
   Vector2f speed;
@@ -31,4 +31,6 @@ private:
   std::string fold_name;
   int state;
   Vector2f deplacement;
+  int anim_state;
+  Sprite sprite;
 };
