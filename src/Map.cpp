@@ -1,15 +1,28 @@
+#pragma once 
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <BBOP/Graphics.h>
 #include <irrKlang/irrKlang.h>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 
 #include "../include/Map.h"
 
+static bool initialized = false;
+
 Obstacle::Obstacle()
-    : obs(Texture("img/map/obstacle/obs.png"))
+    : obs(Texture("img/obs1.png"))
 {
-    
+    if (!initialized) {
+        std::srand(time(NULL));
+        initialized = true;
+    }
+    random_pos_x = rand() % (BBOP_WINDOW_SIZE.x - offsetx*2) + offsetx;
+    random_pos_y = rand() % (BBOP_WINDOW_SIZE.y - offsety*2) + offsety;
+    std::cout<<random_pos_x << "." <<random_pos_y << std::endl;
+    obs.setPosition(Vector2f(random_pos_x, random_pos_y));
 }
 
 
@@ -21,8 +34,7 @@ Sprite *Obstacle::get_sprite()
 Map::Map()
   : map_s(Texture("img/map/map.png"))
 {
-    std::srand(time(NULL));
-    int random_number = rand() % 20 + 1; 
+    int random_number = rand() % 100 + 1; 
     for (int i = 0; i < random_number; i++)
     {
         Obstacle ob;
@@ -30,6 +42,9 @@ Map::Map()
     }
 
     map_s.setSize(Vector2f(BBOP_WINDOW_SIZE.x, BBOP_WINDOW_SIZE.y));
+
+
+
 
 }
 
@@ -46,4 +61,5 @@ void Map::Draw(GLint renderModeLoc) const
         list_obst[i].Draw(renderModeLoc);
     }
 }
+
 
