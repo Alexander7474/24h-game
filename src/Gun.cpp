@@ -3,12 +3,8 @@
 Bullet::Bullet()
     : bullet(Texture("img/bullet/bullet.png"))
 {
-    angle_de_tir = g.get_rotation() + M_PI/2.0f;
-    Vector2f dep(cos(angle_de_tir), sin(angle_de_tir));
-    direction = dep; // a faire directement dans Gun
     vitesse = 5.0f;
-    position = g.get_position();
-    balle = (Vector2f(position.x, position.y), Vector2f(position.x, position.y), Vector2f(6,10))
+    position = g.get_position(); // ERREUR
     // deplacement cosinus de l'angle * vitesse
 }
 
@@ -63,15 +59,19 @@ void Gun::tirer(){ // a appeler dans une boucle :
 */
     if (capacite_actuelle == 0) recharger();
     else if (!shoot) {
-        capacite_actuelle--; shoot true;
+        capacite_actuelle--; 
+        balles[max_capacite-capacite_actuelle].angle_de_tir = rotation;
+        balles[max_capacite-capacite_actuelle].position = position;
+        shoot = true;
     }
     // ajouter animation de tir
     if (anim_state < 6 && shoot) {
         anim_state++;
         gun.setTexture(textures[0][anim_state]);
-        if (anim_state = 2){
+        if (anim_state == 2){
             for (int i = 0; i < (max_capacite-capacite_actuelle); i++){
-                balles[max_capacite-capacite_actuelle].update();
+                balles[i].update();
+                balles[i].push_back(/*nom de la Bullet*/);
             }
         }
     }
@@ -81,6 +81,12 @@ void Gun::tirer(){ // a appeler dans une boucle :
         shoot = false;
         exit(1);
     }
+
+    /*
+    angle_de_tir = g.get_rotation() + M_PI/2.0f;
+    Vector2f dep(cos(angle_de_tir), sin(angle_de_tir));
+    direction = dep; // a faire directement dans Gun
+    */
     
 }
 
