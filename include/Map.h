@@ -43,7 +43,7 @@ private:
     Sprite map_s;
 public:
     Map();
-    void get_obst(list_obst);
+    std::vector<Obstacle>get_obst();
     virtual void Draw(GLint renderModeLoc) const override;
 
     
