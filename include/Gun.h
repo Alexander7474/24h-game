@@ -16,6 +16,9 @@ class Bullet : public BbopDrawable
         Bullet();
         void deplacement();
         void update();
+
+        void Draw(GLint renderModeLoc) const override;
+
         ~Bullet();
 };
 
@@ -44,7 +47,7 @@ class Gun : public BbopDrawable
         void update();
         int anim_state = 0;
 
-        void Draw(GLint renderModLoc) const override;
+        void Draw(GLint renderModeLoc) const override;
 
         ~Gun();
 };
