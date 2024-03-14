@@ -4,7 +4,6 @@ Bullet::Bullet()
     : bullet(Texture("img/bullet/bullet.png"))
 {
     vitesse = 5.0f;
-    position = g.get_position(); // ERREUR
     // deplacement cosinus de l'angle * vitesse
 }
 
@@ -64,10 +63,9 @@ void Gun::tirer(){ // a appeler dans une boucle :
         balles[max_capacite-capacite_actuelle].position = position;
         shoot = true;
     }
-    // ajouter animation de tir
     if (anim_state < 6 && shoot) {
-        anim_state++;
         gun.setTexture(textures[0][anim_state]);
+        anim_state++;
         if (anim_state == 2){
             for (int i = 0; i < (max_capacite-capacite_actuelle); i++){
                 balles[i].update();
@@ -134,7 +132,6 @@ void Gun::update(){
 
 void Bullet::update(){
     deplacement();
-    check(balle);
 }
 
 void Gun::Draw(GLint renderModLoc) const
