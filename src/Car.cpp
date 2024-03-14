@@ -42,7 +42,9 @@ Car::Car(std::string new_fold_name, Vector2f new_position, float new_rotation, f
     Texture toadd(filename.c_str());
     textures[3].push_back(toadd);
   }
+  sprite.setSize(Vector2f(50.0f,50.0f));
   sprite.setOrigin(Vector2f(sprite.getSize().x/2.0f,sprite.getSize().y/2.0f));
+  sprite.setPosition(pos);
 }
 
 void Car::accelerate()

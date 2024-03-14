@@ -5,17 +5,17 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <BBOP/Graphics.h>
-#include <string>
+#include <vector>
 
-#include "Car.h"
-
-class Bot : public BbopDrawable
+class Game : public BbopDrawable 
 {
-private:
-  Car car;
 public:
-  Bot(std::string fold_name, Vector2f new_pos, float new_max_speed);
+  Game();
 
   void update();
   virtual void Draw(GLint renderModeLoc) const override;
+private:
+  Map map;
+  Car car;
+  std::vector<Bot> bots;
 };
