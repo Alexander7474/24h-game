@@ -20,6 +20,7 @@ public:
   float get_rotation();
   void set_state(int new_state);
   int get_state();
+  Sprite* get_sprite();
 
   void Draw(GLint renderModLoc) const override;
   void update();

@@ -16,6 +16,7 @@ private:
 public:
   Bot(std::string fold_name, Vector2f new_pos, float new_max_speed);
 
+  Car* get_car();
   void update();
   virtual void Draw(GLint renderModeLoc) const override;
 };

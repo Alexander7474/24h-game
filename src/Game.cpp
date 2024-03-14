@@ -1,5 +1,6 @@
 #include "../include/Game.h"
 #include <GLFW/glfw3.h>
+#include <iostream>
 
 Game::Game()
   : player("img/bleu_car", Vector2f(100.0f,100.0f), 0.0f, 0.2f)
@@ -31,5 +32,11 @@ void Game::update(GLFWwindow *window)
   if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
     player.go_left();
   }
+  for(int i = 0; i < bots.size(); i++){
+    if(player.get_sprite()->getCollisionBox()->check(bots[i].get_car()->get_sprite()->getCollisionBox())){
+      std::cout << "ger" << std::endl;
+    }
+  }
   player.update();
+  //gestion collision
 }

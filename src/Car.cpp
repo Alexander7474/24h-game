@@ -106,3 +106,8 @@ int Car::get_state()
 {
   return state;
 }
+
+Sprite* Car::get_sprite()
+{
+  return &sprite; 
+}
