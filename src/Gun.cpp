@@ -1,3 +1,4 @@
+#include "../include/Car.h"
 #include "../include/Gun.h"
 
 Bullet::Bullet()
@@ -129,9 +130,9 @@ std::vector<Bullet> Gun::get_bullet(){
     return(balles);
 }
 
-void Gun::update(){
-    set_position(position);
-    set_rotation(rotation);
+void Gun::update(Car car){
+    set_position(car.get_pos());
+    set_rotation(car.get_rotation());
 }
 
 void Bullet::update(){
@@ -147,7 +148,3 @@ void Gun::Draw(GLint renderModeLoc) const
 {
   gun.Draw(renderModeLoc);
 }
-
-Gun::~Gun(){}
-
-Bullet::~Bullet(){}
