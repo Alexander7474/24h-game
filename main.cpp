@@ -30,7 +30,7 @@ int main () {
     ///////////////////////////////////////////////
 
     defaultScene.Use();
-    game.update();
+    game.update(window);
     defaultScene.Draw(game);
     ///////////////////////////////////////////////
     ///Game loop end

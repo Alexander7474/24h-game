@@ -16,10 +16,10 @@ class Game : public BbopDrawable
 public:
   Game();
 
-  void update();
+  void update(GLFWwindow *window);
   virtual void Draw(GLint renderModeLoc) const override;
 private:
   Map map;
-  Car car;
+  Car player;
   std::vector<Bot> bots;
 };
