@@ -15,7 +15,7 @@ class Bullet : public BbopDrawable
         float vitesse;
         Sprite bullet;
         Bullet();
-        Bullet(Vector2f, float);
+        Bullet(Vector2f, float, Vector2f);
         void update();
 
         void Draw(GLint renderModeLoc) const override;
