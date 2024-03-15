@@ -90,9 +90,8 @@ void Gun::update(Car car){
     }
 }
 
-void Bullet::update(Car car){
+void Bullet::update(){
     deplacement();
-    position = car.get_pos();
 }
 
 void Gun::animate(int i){
@@ -127,7 +126,13 @@ if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS){
     }
 */
     if(capacite_actuelle == 0) return;
-    else shooted = true;
+    else{
+        shooted = true;
+        Bullet B;
+        B.angle_de_tir = rotation;
+        B.position = position;
+        balles.push_back(B);
+    }
 }
 
 void Bullet::Draw(GLint renderModeLoc) const
