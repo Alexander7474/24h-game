@@ -146,8 +146,8 @@ void Bullet::update(Car car){
     position = car.get_pos();
 }
 
-void Gun::animate(){
-    gun.setTexture(textures[0][anim_state]);
+void Gun::animate(int i){
+    gun.setTexture(textures[i][anim_state]);
     if (anim_state == 5) anim_state = 0;
     else  anim_state ++;
 }
