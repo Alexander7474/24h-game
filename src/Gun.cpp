@@ -86,7 +86,7 @@ void Gun::update(Car car){
     set_position(car.get_pos());
     set_rotation(car.get_rotation());
     for (int i = 0; i < (max_capacite - capacite_actuelle); i++){
-        balles[i].update(car);
+        balles[i].update();
     }
 }
 
