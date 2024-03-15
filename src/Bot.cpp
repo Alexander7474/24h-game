@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <cmath>
 #include <iostream>
+#include <irrKlang/ik_ISoundEngine.h>
 
 Bot::Bot(int new_diff_level)
   : diff_level(new_diff_level)
@@ -10,7 +11,7 @@ Bot::Bot(int new_diff_level)
   
 }
 
-void Bot::play(Car *car, Car *player)
+void Bot::play(Car *car, Gun *gun, Car *player, irrklang::ISoundEngine* sound)
 {
   Vector2f carPos = car->get_pos();
   Vector2f playerPos = player->get_pos();
@@ -26,4 +27,7 @@ void Bot::play(Car *car, Car *player)
     car->accelerate();
   else
    car->decelerate();
+  float dist = sqrt(pow(playerPos.x-carPos.x, 2)+pow(playerPos.y-carPos.y, 2));
+  if(dist > 250.0 && car->get_life() > 0.0f)
+    gun->shoot(sound);
 }

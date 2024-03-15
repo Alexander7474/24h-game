@@ -69,7 +69,7 @@ void Game::update(GLFWwindow *window)
       if(cpt > cars_size)
         exit(0);
     }
-    bot.play(&cars[car1], &cars[car2]);
+    bot.play(&cars[car1], &guns[car1], &cars[car2], sound);
     cars[car1].update();
     guns[car1].update(cars[car1]);
   }
