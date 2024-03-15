@@ -3,14 +3,16 @@
 
 #include <iostream>
 
-Bullet::Bullet(Vector2f pos, float rotate)
+Bullet::Bullet(Vector2f pos, float rotate, Vector2f org)
     : bullet(Texture("img/bullet/bullet.png"))
 {
     position = pos;
     angle_de_tir = rotate + M_PI;
+    bullet.setSize(Vector2f(3.0f, 5.0f));
     bullet.setPosition(position);
     bullet.setRotation(angle_de_tir);
-    vitesse = 1.0f;
+    bullet.setOrigin(Vector2f(org.x-28.5f, org.y-40.0f));
+    vitesse = 5.0f;
 }
 
 Gun::Gun()
@@ -43,11 +45,13 @@ Gun::Gun(float gun_rotation, Vector2f gun_position)
 
     for(int i = 1; i < 7; i++){
         std::string filename = "img/gunshot/gunshot" + std::to_string(i) + ".png";
+        std::cout << filename << std::endl;
         Texture toadd(filename.c_str());
         textures[0].push_back(toadd);
     }
     for(int i = 1; i < 7; i++){
         std::string filename = "img/reload/reload" + std::to_string(i) + ".png";
+        std::cout << filename << std::endl;
         Texture toadd(filename.c_str());
         textures[1].push_back(toadd);
     }
@@ -60,6 +64,7 @@ void Gun::set_rotation(float car_rotation){
 
 void Gun::set_position(Vector2f car_position){
     position = car_position;
+    std::cout<<car_position.x<<" "<<car_position.y<<" "<<position.x<<" "<<position.y<< std::endl;
     gun.setPosition(position);
 }
 
@@ -84,10 +89,13 @@ int Gun::get_max_capacite(){
 }
 
 void Gun::update(Car car){
-    set_position(Vector2f(car.get_pos().x - 5.0f, car.get_pos().y + 5.0f));
+    set_position(Vector2f(car.get_pos().x, car.get_pos().y));
     set_rotation(car.get_rotation());
     for (int i = 0; i < balles.size(); i++){
         balles[i].update();
+        if (balles[i].position.x > 655 || balles[i].position.x < 65 || balles[i].position.y > 435 || balles[i].position.y < 65){
+            balles.erase(balles.begin()+i);
+        }
     }
 }
 
@@ -131,7 +139,8 @@ if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS){
     if(capacite_actuelle == 0) return;
     else{
         shooted = true;
-        Bullet B(position, rotation);
+        capacite_actuelle--;
+        Bullet B(position, rotation, gun.getOrigin());
         B.direction = Vector2f(cos(rotation + M_PI/2.0f), sin(rotation + M_PI/2.0f));
         std::cout << B.direction.x << " " << B.direction.y << std::endl;
         balles.push_back(B);
