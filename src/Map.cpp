@@ -17,12 +17,9 @@ Obstacle::Obstacle()
         std::srand(time(NULL));
         initialized = true;
     }
-    std::string find_obs = "img/map/obstacles/"+ std::to_string(rand()%5) + ".png";
-    obs.setTexture(Texture(find_obs.c_str()));
     random_pos_x = rand() % (BBOP_WINDOW_SIZE.x - offsetx*2) + offsetx;
     random_pos_y = rand() % (BBOP_WINDOW_SIZE.y - offsety*2) + offsety;
     obs.setSize(Vector2f(50,50));
-    std::cout << find_obs << std::endl;
     obs.setPosition(Vector2f(random_pos_x, random_pos_y));
 }
 
