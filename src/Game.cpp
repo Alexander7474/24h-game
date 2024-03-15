@@ -56,6 +56,7 @@ void Game::Draw(GLint renderModeLoc) const
 
 int Game::update(GLFWwindow *window)
 {
+  map.update();
   if(cars[0].get_life() <= 0.0f){
     texte.setPosition(Vector2f(275.0f,200.0f));
     texte.setTexte("Game over");
