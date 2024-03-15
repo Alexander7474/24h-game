@@ -59,7 +59,7 @@ void Bullet::deplacement(){
     position.y = position.y + vitesse;
 }
 
-void Gun::tirer(){
+void Gun::tirer(Car car){
 /*
     while ([nom du Gun].anim_state < 6){
         [nom du Gun].tirer();
@@ -83,7 +83,7 @@ void Gun::tirer(){
             for (int i = 0; i < (max_capacite-capacite_actuelle); i++){
                 balles[i].angle_de_tir = get_rotation() + M_PI/2.0f;
                 balles[i].direction = Vector2f(cos(balles[i].angle_de_tir), sin(balles[i].angle_de_tir));
-                balles[i].update();
+                balles[i].update(gun, car);
             }
         }
         anim_state++;
@@ -137,12 +137,13 @@ void Gun::update(Car car){
     set_position(car.get_pos());
     set_rotation(car.get_rotation());
     for (int i = 0; i < (max_capacite - capacite_actuelle); i++){
-        balles[i].update();
+        balles[i].update((*this), car);
     }
 }
 
-void Bullet::update(){
+void Bullet::update(Gun gun, Car car){
     deplacement();
+    position = car.get_pos();
 }
 
 void Bullet::Draw(GLint renderModeLoc) const
