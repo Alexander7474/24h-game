@@ -13,14 +13,18 @@
 static bool initialized = false;
 
 Obstacle::Obstacle()
-    : obs(Texture("img/map/obstacles/obs1.png"))
+    : obs(Texture("img/map/obstacles/0.png"))
 {
     if (!initialized) {
         std::srand(time(NULL));
         initialized = true;
     }
+    std::string find_obs = "img/map/obstacles/"+ std::to_string(rand()%6) + ".png";
+    obs.setTexture(Texture(find_obs.c_str()));
     random_pos_x = rand() % (BBOP_WINDOW_SIZE.x - offsetx*2) + offsetx;
     random_pos_y = rand() % (BBOP_WINDOW_SIZE.y - offsety*2) + offsety;
+    obs.setSize(Vector2f(50,50));
+    std::cout << find_obs << std::endl;
     obs.setPosition(Vector2f(random_pos_x, random_pos_y));
 }
 
@@ -28,12 +32,12 @@ Obstacle::Obstacle()
 Sprite *Obstacle::get_sprite() 
 {
     return &obs;
-}
+} 
 
 Map::Map()
   : map_s(Texture("img/map/map.png"))
 {
-    int random_number = rand() % 10 + 10; 
+    int random_number = rand() % 5 + 5; 
     for (int i = 0; i < random_number; i++)
     {
         Obstacle ob;
