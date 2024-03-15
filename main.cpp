@@ -24,6 +24,13 @@ int main () {
   ////////////////////////////////////////
   ///Game var and obj
   ////////////////////////////////////////
+
+
+  Sprite menu(Texture("img/menu/menu.png"));
+  Sprite bouton_menu(Texture("img/menu/play_buton/0.png"));
+  bouton_menu.setPosition(Vector2f(BBOP_WINDOW_SIZE.x/3, BBOP_WINDOW_SIZE.y/2.1));
+
+  bool is_playing = false;
   
   Scene defaultScene;
   Game game(5,SoundEngine);
@@ -38,8 +45,25 @@ int main () {
     ///////////////////////////////////////////////
 
     defaultScene.Use();
-    game.update(window);
-    defaultScene.Draw(game);
+
+    if(!is_playing)
+    {
+      if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+      {
+        is_playing = true;
+      }
+
+
+      defaultScene.Draw(menu);
+      defaultScene.Draw(bouton_menu);
+    }
+
+    else
+    {
+      game.update(window);
+      defaultScene.Draw(game);
+    }
+    
     ///////////////////////////////////////////////
     ///Game loop end
     ///////////////////////////////////////////////
