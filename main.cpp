@@ -31,6 +31,7 @@ int main () {
   bouton_menu.setPosition(Vector2f(BBOP_WINDOW_SIZE.x/3, BBOP_WINDOW_SIZE.y/2.1));
 
   bool is_playing = false;
+  int cpt_frame=20;
   
   Scene defaultScene;
   Game game(5,SoundEngine);
@@ -50,6 +51,7 @@ int main () {
     {
       if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
       {
+        bouton_menu.setTexture(Texture("img/menu/play_buton/1.png"));
         is_playing = true;
       }
 
