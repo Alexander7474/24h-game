@@ -1,6 +1,8 @@
 #include "../include/Car.h"
 #include "../include/Gun.h"
 
+#include <iostream>
+
 Bullet::Bullet()
     : bullet(Texture("img/bullet/bullet.png"))
 {
@@ -16,7 +18,6 @@ Gun::Gun()
     capacite_actuelle = 250;
     rotation = 0;
     position = Vector2f(0.0f,0.0f);
-    shoot = false;
     gun.setAlpha(0);
     set_position(position);
     set_rotation(rotation);
@@ -32,7 +33,6 @@ Gun::Gun(float gun_rotation, Vector2f gun_position)
     capacite_actuelle = 250;
     rotation = gun_rotation;
     position = gun_position;
-    shoot = false;
     gun.setAlpha(0);
     set_position(position);
     set_rotation(rotation);
@@ -57,57 +57,6 @@ void Bullet::deplacement(){
     bullet.move(Vector2f(vitesse, vitesse));
     position.x = position.x + vitesse;
     position.y = position.y + vitesse;
-}
-
-void Gun::tirer(Car car){
-/*
-    while ([nom du Gun].anim_state < 6){
-        [nom du Gun].tirer();
-        [nom de la Scene].Draw([nom du Gun]);
-    }
-*/
-    if (capacite_actuelle == 0) {
-        recharger();        
-    }
-    else if (!shoot) {
-        capacite_actuelle--; 
-        balles[max_capacite-capacite_actuelle].angle_de_tir = rotation;
-        balles[max_capacite-capacite_actuelle].position = position;
-        balles[max_capacite-capacite_actuelle].bullet.setPosition(position);
-        balles[max_capacite-capacite_actuelle].bullet.setRotation(rotation);
-        shoot = true;
-    }
-    if (anim_state < 6 && shoot) {
-        gun.setTexture(textures[0][anim_state]);
-        if (anim_state == 2){
-            for (int i = 0; i < (max_capacite-capacite_actuelle); i++){
-                balles[i].angle_de_tir = get_rotation() + M_PI/2.0f;
-                balles[i].direction = Vector2f(cos(balles[i].angle_de_tir), sin(balles[i].angle_de_tir));
-                balles[i].update(car);
-            }
-        }
-        anim_state++;
-    }
-    else{
-        anim_state = 0;
-        gun.setTexture(base);
-        shoot = false;
-        return;
-    }
-    
-}
-
-void Gun::recharger(){
-    // animation rechargement
-    if (anim_state < 6){
-        anim_state++;
-        gun.setTexture(textures[1][anim_state]);
-    }
-    else{
-        gun.setTexture(base);
-        capacite_actuelle = max_capacite;
-        anim_state = 0;
-    }
 }
 
 void Gun::set_rotation(float car_rotation){
@@ -147,9 +96,38 @@ void Bullet::update(Car car){
 }
 
 void Gun::animate(int i){
-    gun.setTexture(textures[i][anim_state]);
-    if (anim_state == 5) anim_state = 0;
+    if (i == 1) gun.setTexture(textures[i][anim_state/3]);
+    else gun.setTexture(textures[i][anim_state]);
+    if (anim_state == 5){
+        anim_state = 0;
+        if (i == 1) animated = false;
+        if (i == 0) shooted = false;
+    }
     else  anim_state ++;
+}
+
+void Gun::reload(){ /* INCLURE DANS LE SCRIPT QUI RUN LES TOUCHES
+if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS){
+      pistol.reload();
+    }
+    if (pistol.animated){
+      pistol.animate(1);
+    }
+*/
+    capacite_actuelle = max_capacite;
+    animated = true;
+}
+
+void Gun::shoot(){ /* INCLURE DANS LE SCRIPT QUI RUN LES TOUCHES
+if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS){
+      pistol.shoot();
+    }
+    if (pistol.shooted){
+      pistol.animate(0);
+    }
+*/
+    if(capacite_actuelle == 0) return;
+    else shooted = true;
 }
 
 void Bullet::Draw(GLint renderModeLoc) const
