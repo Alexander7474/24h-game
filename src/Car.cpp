@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-Car::Car(std::string new_fold_name, Vector2f new_position, float new_rotation, float new_max_speed)
+Car::Car(std::string new_fold_name, Vector2f new_position, float new_rotation, float new_max_speed, float new_life)
   : pos(new_position),
     rotation(new_rotation),
     max_speed(new_max_speed),
@@ -16,7 +16,7 @@ Car::Car(std::string new_fold_name, Vector2f new_position, float new_rotation, f
     deplacement(0.0f,0.0f),
     anim_state(0),
     sprite("img/bleu_car/100/0.png"),
-    life(100.0f),
+    life(new_life),
     last_hit(glfwGetTime())
 {
   //chargement des Texture
@@ -52,26 +52,32 @@ Car::Car(std::string new_fold_name, Vector2f new_position, float new_rotation, f
 
 void Car::accelerate()
 {
-  float angle = rotation+M_PI/2.0f;
-  Vector2f dep(cos(angle),sin(angle));
-  speed.x+=dep.x*max_speed;speed.y+=dep.y*max_speed;
+  if(state != 3){
+    float angle = rotation+M_PI/2.0f;
+    Vector2f dep(cos(angle),sin(angle));
+    speed.x+=dep.x*max_speed;speed.y+=dep.y*max_speed;
+  }
 }
 
 void Car::decelerate()
 {
-  float angle = rotation+M_PI/2.0f;
-  Vector2f dep(cos(angle),sin(angle));
-  speed.x-=dep.x*max_speed_reverse;speed.y-=dep.y*max_speed_reverse;
+  if(state != 3){
+    float angle = rotation+M_PI/2.0f;
+    Vector2f dep(cos(angle),sin(angle));
+    speed.x-=dep.x*max_speed_reverse;speed.y-=dep.y*max_speed_reverse;
+  }
 }
 
 void Car::go_right()
 {
-  rotation+=0.1f;
+  if(state !=3)
+    rotation+=max_speed/2.0f;
 }
 
 void Car::go_left()
 {
-  rotation-=0.1f;
+  if(state != 3)
+    rotation-=max_speed/2.0f;
 }
 
 void Car::update()
@@ -83,6 +89,8 @@ void Car::update()
     state = 1;
   }else if(life > 0.0f){
     state = 2;
+  }else {
+    state = 3;
   }
   speed.x*=0.95f;speed.y*=0.95f;
   anim_state++;

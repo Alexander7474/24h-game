@@ -20,7 +20,6 @@ public:
   virtual void Draw(GLint renderModeLoc) const override;
 private:
   Map map;
-  Car player;
   Bot bot;
-  std::vector<Car> bots;
+  std::vector<Car> cars;
 };

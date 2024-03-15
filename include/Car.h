@@ -10,7 +10,7 @@
 class Car : public BbopDrawable
 {
 public:
-  Car(std::string new_fold_name, Vector2f new_pos, float new_rotation, float new_max_speed);
+  Car(std::string new_fold_name, Vector2f new_pos, float new_rotation, float new_max_speed, float new_life);
 
   void accelerate();
   void decelerate();

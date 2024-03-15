@@ -1,5 +1,3 @@
-#pragma once 
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <BBOP/Graphics.h>
@@ -19,7 +17,7 @@ Obstacle::Obstacle()
         std::srand(time(NULL));
         initialized = true;
     }
-    std::string find_obs = "img/map/obstacles/"+ std::to_string(rand()%6) + ".png";
+    std::string find_obs = "img/map/obstacles/"+ std::to_string(rand()%5) + ".png";
     obs.setTexture(Texture(find_obs.c_str()));
     random_pos_x = rand() % (BBOP_WINDOW_SIZE.x - offsetx*2) + offsetx;
     random_pos_y = rand() % (BBOP_WINDOW_SIZE.y - offsety*2) + offsety;
