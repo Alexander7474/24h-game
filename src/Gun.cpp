@@ -86,11 +86,7 @@ int Gun::get_max_capacite(){
 void Gun::update(Car car){
     set_position(Vector2f(car.get_pos().x - 5.0f, car.get_pos().y + 5.0f));
     set_rotation(car.get_rotation());
-<<<<<<< HEAD
     for (int i = 0; i < balles.size(); i++){
-=======
-    for (int i = 0; i < (max_capacite - capacite_actuelle); i++){
->>>>>>> 37610fd (ia)
         balles[i].update();
     }
 }
@@ -149,13 +145,8 @@ void Bullet::Draw(GLint renderModeLoc) const
 
 void Gun::Draw(GLint renderModeLoc) const
 {
-<<<<<<< HEAD
     for (int i = 0; i<balles.size(); i++){
       balles[i].Draw(renderModeLoc);
     }
     gun.Draw(renderModeLoc);
 }
-=======
-  gun.Draw(renderModeLoc);
-}
->>>>>>> 37610fd (ia)
