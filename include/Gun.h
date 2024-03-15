@@ -28,7 +28,6 @@ class Gun : public BbopDrawable
         int capacite_actuelle;
         float rotation;
         Vector2f position;
-        bool shoot;
     
     public:
         Gun();
@@ -37,8 +36,6 @@ class Gun : public BbopDrawable
         std::vector<Bullet> balles;
         Texture base;
         Sprite gun;
-        void tirer(Car);
-        void recharger();
         void set_rotation(float);
         void set_position(Vector2f);
         float get_rotation();
@@ -46,6 +43,10 @@ class Gun : public BbopDrawable
         std::vector<Bullet> get_bullet();
         void update(Car);
         void animate(int);
+        bool animated;
+        bool shooted;
+        void reload();
+        void shoot();
         int anim_state = 0;
 
         void Draw(GLint renderModeLoc) const override;
