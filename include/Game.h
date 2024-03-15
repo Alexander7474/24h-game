@@ -21,5 +21,6 @@ public:
 private:
   Map map;
   Car player;
-  std::vector<Bot> bots;
+  Bot bot;
+  std::vector<Car> bots;
 };

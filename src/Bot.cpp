@@ -1,21 +1,29 @@
 #include "../include/Bot.h"
 #include <BBOP/Graphics/bbopMathClass.h>
+#include <GLFW/glfw3.h>
+#include <cmath>
+#include <iostream>
 
-Bot::Bot(std::string fold_name, Vector2f new_pos, float new_max_speed)
-  : car(fold_name, new_pos, 0.0f, 0.5f)
+Bot::Bot(int new_diff_level)
+  : diff_level(new_diff_level)
 {
   
 }
 
-void Bot::update()
-{}
-
-void Bot::Draw(GLint renderModeLoc) const
+void Bot::play(Car *car, Car *player)
 {
-  car.Draw(renderModeLoc);
-}
-
-Car* Bot::get_car()
-{
-  return &car;
+  Vector2f carPos = car->get_pos();
+  Vector2f playerPos = player->get_pos();
+  float angle = atan2(playerPos.y-carPos.y, playerPos.x-carPos.x);
+  while (angle > M_PI) angle -= 2.0 * M_PI;
+  while (angle <= -M_PI) angle += 2.0 * M_PI;
+  angle = angle-car->get_rotation()-(M_PI/2.0f);
+  if(angle < 0.0f)
+    car->go_left();
+  if(angle >= 0.0f)
+    car->go_right();
+  if(glfwGetTime()-car->get_last_hit()>1.5)
+    car->accelerate();
+  else
+   car->decelerate();
 }

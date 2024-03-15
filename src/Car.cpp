@@ -1,5 +1,6 @@
 #include "../include/Car.h"
 #include <BBOP/Graphics/bbopMathClass.h>
+#include <GLFW/glfw3.h>
 #include <cmath>
 #include <string>
 
@@ -15,7 +16,8 @@ Car::Car(std::string new_fold_name, Vector2f new_position, float new_rotation, f
     deplacement(0.0f,0.0f),
     anim_state(0),
     sprite("img/bleu_car/100/0.png"),
-    life(100.0f)
+    life(100.0f),
+    last_hit(glfwGetTime())
 {
   //chargement des Texture
   for(int i = 0; i < 1; i++){
@@ -45,6 +47,7 @@ Car::Car(std::string new_fold_name, Vector2f new_position, float new_rotation, f
   sprite.setSize(Vector2f(50.0f,50.0f));
   sprite.setOrigin(Vector2f(sprite.getSize().x/2.0f,sprite.getSize().y/2.0f));
   sprite.setPosition(pos);
+  sprite.setColor(Vector3i(500,500,500));
 }
 
 void Car::accelerate()
@@ -73,11 +76,27 @@ void Car::go_left()
 
 void Car::update()
 {
+
+  if(life > 50.0f){
+    state = 0;
+  }else if(life > 25.0f){
+    state = 1;
+  }else if(life > 0.0f){
+    state = 2;
+  }
   speed.x*=0.95f;speed.y*=0.95f;
   anim_state++;
   sprite.move(speed);
+  pos = sprite.getPosition();
   if(anim_state >= static_cast<int>(textures[state].size()*7))
     anim_state = 0;
+  if(glfwGetTime()-last_hit<1.5f && sprite.getRGBFilterState()){
+    sprite.setRGBFilterState(false);
+  }else if(glfwGetTime()-last_hit<1.5f && !sprite.getRGBFilterState()){
+    sprite.setRGBFilterState(true);
+  }else {
+    sprite.setRGBFilterState(false);
+  }
   sprite.setTexture(textures[state][anim_state/7]);
   sprite.setRotation(rotation);
 }
@@ -110,4 +129,35 @@ int Car::get_state()
 Sprite* Car::get_sprite()
 {
   return &sprite; 
+}
+
+void Car::move(Vector2f mv)
+{
+  speed.x+=mv.x;speed.y+=mv.y;
+}
+
+Vector2f Car::get_speed()
+{
+  return speed;
+}
+
+void Car::set_speed(Vector2f new_speed)
+{
+  speed = new_speed;
+}
+
+void Car::damage(float n)
+{
+  life-=n;
+  last_hit = glfwGetTime();
+}
+
+float Car::get_life()
+{
+  return life;
+}
+
+double Car::get_last_hit()
+{
+  return last_hit;
 }

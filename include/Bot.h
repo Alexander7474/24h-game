@@ -9,14 +9,12 @@
 
 #include "Car.h"
 
-class Bot : public BbopDrawable
+class Bot
 {
 private:
-  Car car;
+  int diff_level;
 public:
-  Bot(std::string fold_name, Vector2f new_pos, float new_max_speed);
+  Bot(int new_diff_level);
 
-  Car* get_car();
-  void update();
-  virtual void Draw(GLint renderModeLoc) const override;
+  void play(Car *car, Car *player);
 };

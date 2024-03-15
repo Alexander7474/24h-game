@@ -20,7 +20,13 @@ public:
   float get_rotation();
   void set_state(int new_state);
   int get_state();
+  void damage(float n);
+  float get_life();
+  Vector2f get_speed();
+  double get_last_hit();
+  void set_speed(Vector2f new_speed);
   Sprite* get_sprite();
+  void move(Vector2f mv);
 
   void Draw(GLint renderModLoc) const override;
   void update();
@@ -37,4 +43,5 @@ private:
   int anim_state;
   Sprite sprite;
   float life;
+  double last_hit;
 };
