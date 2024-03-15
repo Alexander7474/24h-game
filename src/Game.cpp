@@ -3,11 +3,14 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <irrKlang/ik_ISoundEngine.h>
+#include <iterator>
 #include <random>
 
-Game::Game()
+Game::Game(int n_en, irrklang::ISoundEngine* n_sound)
   : bot(0),
-    cars_size(20)
+    cars_size(n_en),
+    sound(n_sound)
 {
   std::srand(time(NULL));
   for(int i = 0; i< cars_size ; i++){
@@ -48,6 +51,12 @@ void Game::update(GLFWwindow *window)
   if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
     cars[0].go_left();
   }
+  if(glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS){
+    guns[0].shoot(sound);
+  }
+  if(glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS){
+    guns[0].reload();
+  }
   for(int i = 1; i < cars_size; i++){
     int car1 = i;int car2 = i+1;
     if(car2 >= cars_size)
@@ -82,6 +91,7 @@ void Game::update(GLFWwindow *window)
         //std::cout << iAngle << " " << yAngle << std::endl;
         if(cars[y].get_life() > 0.0 && cars[i].get_life() > 0.0){
           if(cars[y].get_sprite()->getCollisionBox()->check(cars[i].get_sprite()->getCollisionBox())&& glfwGetTime()-cars[y].get_last_hit()>1.1&& glfwGetTime()-cars[i].get_last_hit()>1.1){
+            sound->play2D("Musique/metal.wav", false);
             if(std::abs(yAngle) <= 1.0f){
               cars[y].set_speed(Vector2f(-cars[y].get_speed().x*1.2f,-cars[y].get_speed().y*1.2f));
               cars[y].damage(1.0f);
@@ -94,16 +104,21 @@ void Game::update(GLFWwindow *window)
             }
           }
         }
+        for(int b = 0; b < guns[y].balles.size() ; b++){
+          if(guns[y].balles[b].bullet.getCollisionBox()->checkWithRotation(cars[i].get_sprite()->getCollisionBox())){
+            guns[y].balles.erase(guns[y].balles.begin()+b);
+            cars[i].damage(5.0);
+          }
+        }
       }
-      if (cars[y].get_pos().x > 640.0f)
-        cars[y].set_speed(Vector2f(-1.0f,0.0f));
-      if(cars[y].get_pos().y > 415.0f)
-        cars[y].set_speed(Vector2f(0.0f,-1.0f));
-      if (cars[y].get_pos().x < 85.0f)
-        cars[y].set_speed(Vector2f(1.0f,0.0f));
-      if(cars[y].get_pos().y < 90.0f)
-        cars[y].set_speed(Vector2f(0.0f,1.0f));
     }
+    if (cars[y].get_pos().x > 640.0f)
+      cars[y].set_speed(Vector2f(-1.0f,0.0f));
+    if(cars[y].get_pos().y > 415.0f)
+      cars[y].set_speed(Vector2f(0.0f,-1.0f));
+    if (cars[y].get_pos().x < 85.0f)
+      cars[y].set_speed(Vector2f(1.0f,0.0f));
+    if(cars[y].get_pos().y < 90.0f)
+      cars[y].set_speed(Vector2f(0.0f,1.0f));
   }
-
 }

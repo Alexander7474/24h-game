@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <BBOP/Graphics.h>
 #include <cmath>
+#include <irrKlang/ik_ISoundEngine.h>
 #include "Car.h"
 
 class Bullet : public BbopDrawable
@@ -28,6 +29,7 @@ class Gun : public BbopDrawable
         int capacite_actuelle;
         float rotation;
         Vector2f position;
+        double last_shoot;
     
     public:
         Gun();
@@ -48,7 +50,7 @@ class Gun : public BbopDrawable
         bool animated;
         bool shooted;
         void reload();
-        void shoot();
+        void shoot(irrklang::ISoundEngine* sound);
         int anim_state = 0;
 
         void Draw(GLint renderModeLoc) const override;

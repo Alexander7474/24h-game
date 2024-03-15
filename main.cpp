@@ -18,13 +18,15 @@ int main () {
 
   ISoundEngine *SoundEngine = createIrrKlangDevice();
   SoundEngine->addSoundSourceFromFile("Musique/24h-pour-coder.wav", ESM_AUTO_DETECT, true);
+  SoundEngine->addSoundSourceFromFile("Musique/metal.wav", ESM_AUTO_DETECT, true);
+  SoundEngine->addSoundSourceFromFile("Musique/pistol.wav", ESM_AUTO_DETECT, true);
   SoundEngine->play2D("Musique/24h-pour-coder.wav", true);
   ////////////////////////////////////////
   ///Game var and obj
   ////////////////////////////////////////
   
   Scene defaultScene;
-  Game game;
+  Game game(5,SoundEngine);
   ////////////////////////////////////////
   ///End var and obj
   ////////////////////////////////////////

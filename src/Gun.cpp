@@ -1,18 +1,20 @@
 #include "../include/Car.h"
 #include "../include/Gun.h"
 
+#include <GLFW/glfw3.h>
 #include <iostream>
+#include <irrKlang/ik_ISoundEngine.h>
 
 Bullet::Bullet(Vector2f pos, float rotate, Vector2f org)
     : bullet(Texture("img/bullet/bullet.png"))
 {
     position = pos;
     angle_de_tir = rotate + M_PI;
-    bullet.setSize(Vector2f(3.0f, 5.0f));
+    bullet.setSize(Vector2f(5.0f, 9.0f));
     bullet.setPosition(position);
     bullet.setRotation(angle_de_tir);
     bullet.setOrigin(Vector2f(org.x-28.5f, org.y-40.0f));
-    vitesse = 5.0f;
+    vitesse = 10.0f;
 }
 
 Gun::Gun()
@@ -42,16 +44,15 @@ Gun::Gun(float gun_rotation, Vector2f gun_position)
     set_rotation(rotation);
     gun.setSize(Vector2f(60.0f, 88.5f));
     gun.setOrigin(Vector2f(60.0f/2, 88.5f/2));
+    last_shoot = glfwGetTime();
 
     for(int i = 1; i < 7; i++){
         std::string filename = "img/gunshot/gunshot" + std::to_string(i) + ".png";
-        std::cout << filename << std::endl;
         Texture toadd(filename.c_str());
         textures[0].push_back(toadd);
     }
     for(int i = 1; i < 7; i++){
         std::string filename = "img/reload/reload" + std::to_string(i) + ".png";
-        std::cout << filename << std::endl;
         Texture toadd(filename.c_str());
         textures[1].push_back(toadd);
     }
@@ -64,7 +65,6 @@ void Gun::set_rotation(float car_rotation){
 
 void Gun::set_position(Vector2f car_position){
     position = car_position;
-    std::cout<<car_position.x<<" "<<car_position.y<<" "<<position.x<<" "<<position.y<< std::endl;
     gun.setPosition(position);
 }
 
@@ -128,7 +128,7 @@ if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS){
     animated = true;
 }
 
-void Gun::shoot(){ /* INCLURE DANS LE SCRIPT QUI RUN LES TOUCHES
+void Gun::shoot(irrklang::ISoundEngine * sound){ /* INCLURE DANS LE SCRIPT QUI RUN LES TOUCHES
 if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS){
       pistol.shoot();
     }
@@ -137,12 +137,13 @@ if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS){
     }
 */
     if(capacite_actuelle == 0) return;
-    else{
+    else if (glfwGetTime()- last_shoot>0.1){
         shooted = true;
+        sound->play2D("Musique/pistol.wav", false);
+        last_shoot = glfwGetTime();
         capacite_actuelle--;
         Bullet B(position, rotation, gun.getOrigin());
         B.direction = Vector2f(cos(rotation + M_PI/2.0f), sin(rotation + M_PI/2.0f));
-        std::cout << B.direction.x << " " << B.direction.y << std::endl;
         balles.push_back(B);
     }
 }
