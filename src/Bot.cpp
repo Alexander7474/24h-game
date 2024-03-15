@@ -28,7 +28,7 @@ void Bot::play(Car *car, Gun *gun, Car *player, irrklang::ISoundEngine* sound)
     int r = rand()%4;
     switch(r){
       case 0:
-        car->accelerate();car->accelerate();
+        car->decelerate();
         break;
       case 1:
         car->accelerate();
