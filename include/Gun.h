@@ -45,7 +45,7 @@ class Gun : public BbopDrawable
         Vector2f get_position();
         std::vector<Bullet> get_bullet();
         void update(Car);
-        void animate();
+        void animate(int);
         int anim_state = 0;
 
         void Draw(GLint renderModeLoc) const override;
