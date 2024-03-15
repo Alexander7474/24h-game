@@ -83,7 +83,7 @@ void Gun::tirer(Car car){
             for (int i = 0; i < (max_capacite-capacite_actuelle); i++){
                 balles[i].angle_de_tir = get_rotation() + M_PI/2.0f;
                 balles[i].direction = Vector2f(cos(balles[i].angle_de_tir), sin(balles[i].angle_de_tir));
-                balles[i].update(gun, car);
+                balles[i].update(car);
             }
         }
         anim_state++;
@@ -137,7 +137,7 @@ void Gun::update(Car car){
     set_position(car.get_pos());
     set_rotation(car.get_rotation());
     for (int i = 0; i < (max_capacite - capacite_actuelle); i++){
-        balles[i].update((*this), car);
+        balles[i].update(car);
     }
 }
 
