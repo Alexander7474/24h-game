@@ -16,7 +16,7 @@ class Bullet : public BbopDrawable
         Sprite bullet;
         Bullet();
         void deplacement();
-        void update(Car);
+        void update();
 
         void Draw(GLint renderModeLoc) const override;
 };
