@@ -22,4 +22,5 @@ private:
   Map map;
   Bot bot;
   std::vector<Car> cars;
+  int cars_size;
 };

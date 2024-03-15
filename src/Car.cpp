@@ -106,9 +106,9 @@ void Car::update()
   pos = sprite.getPosition();
   if(anim_state >= static_cast<int>(textures[state].size()*7))
     anim_state = 0;
-  if(glfwGetTime()-last_hit<1.5f && sprite.getRGBFilterState()){
+  if(glfwGetTime()-last_hit<1.1f && sprite.getRGBFilterState()){
     sprite.setRGBFilterState(false);
-  }else if(glfwGetTime()-last_hit<1.5f && !sprite.getRGBFilterState()){
+  }else if(glfwGetTime()-last_hit<1.1f && !sprite.getRGBFilterState()){
     sprite.setRGBFilterState(true);
   }else {
     sprite.setRGBFilterState(false);

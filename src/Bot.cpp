@@ -22,7 +22,7 @@ void Bot::play(Car *car, Car *player)
     car->go_left();
   if(angle >= 0.0f)
     car->go_right();
-  if(glfwGetTime()-car->get_last_hit()>1.5)
+  if(glfwGetTime()-car->get_last_hit()>1.1)
     car->accelerate();
   else
    car->decelerate();
