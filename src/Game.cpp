@@ -6,12 +6,19 @@
 #include <irrKlang/ik_ISoundEngine.h>
 #include <iterator>
 #include <random>
+#include <string>
 
-Game::Game(int n_en, irrklang::ISoundEngine* n_sound)
+Game::Game(int n_en, irrklang::ISoundEngine* n_sound, Font &font)
   : bot(0),
     cars_size(n_en),
-    sound(n_sound)
+    sound(n_sound),
+    starter(300),
+    texte("test",&font),
+    triangle(3,15.0f)
 {
+  texte.setPosition(Vector2f(350.0f,200.0f));
+  triangle.setRotation(M_PI/2.0f);
+  triangle.setOrigin(Vector2f(50.0f,15.0f));
   std::srand(time(NULL));
   for(int i = 0; i< cars_size ; i++){
     float speed = 0.15f;
@@ -34,10 +41,22 @@ void Game::Draw(GLint renderModeLoc) const
     cars[i].Draw(renderModeLoc);
     guns[i].Draw(renderModeLoc);
   }
+  if(starter > 0){
+    triangle.Draw(renderModeLoc);
+    texte.Draw(renderModeLoc);
+  }
 }
 
 void Game::update(GLFWwindow *window)
 {
+  if(starter > 0){
+    triangle.setPosition(cars[0].get_pos());
+    std::cout << starter << std::endl;
+    starter--;
+    std::string timer = std::to_string(starter/60);
+    texte.setTexte(timer.c_str());
+    return;
+  }
   // check des touches pour cars[0]
   if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
     cars[0].accelerate();
@@ -51,7 +70,7 @@ void Game::update(GLFWwindow *window)
   if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
     cars[0].go_left();
   }
-  if(glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS){
+  if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
     guns[0].shoot(sound);
   }
   if(glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS){
@@ -107,7 +126,7 @@ void Game::update(GLFWwindow *window)
         for(int b = 0; b < guns[y].balles.size() ; b++){
           if(guns[y].balles[b].bullet.getCollisionBox()->checkWithRotation(cars[i].get_sprite()->getCollisionBox())){
             guns[y].balles.erase(guns[y].balles.begin()+b);
-            cars[i].damage(5.0);
+            cars[i].damage(1.0);
           }
         }
       }

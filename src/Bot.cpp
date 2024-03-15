@@ -28,6 +28,6 @@ void Bot::play(Car *car, Gun *gun, Car *player, irrklang::ISoundEngine* sound)
   else
    car->decelerate();
   float dist = sqrt(pow(playerPos.x-carPos.x, 2)+pow(playerPos.y-carPos.y, 2));
-  if(dist > 250.0 && car->get_life() > 0.0f)
+  if(dist > 300.0 && car->get_life() > 0.0f)
     gun->shoot(sound);
 }

@@ -34,7 +34,8 @@ int main () {
   int cpt_frame=20;
   
   Scene defaultScene;
-  Game game(5,SoundEngine);
+  Font font(48, "fonts/arial.ttf");
+  Game game(5,SoundEngine,font);
   ////////////////////////////////////////
   ///End var and obj
   ////////////////////////////////////////
@@ -52,9 +53,14 @@ int main () {
       if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
       {
         bouton_menu.setTexture(Texture("img/menu/play_buton/1.png"));
+        cpt_frame--;
+      }
+      if(cpt_frame < 20){
+        cpt_frame--;
+      }
+      if(cpt_frame == 0){
         is_playing = true;
       }
-
 
       defaultScene.Draw(menu);
       defaultScene.Draw(bouton_menu);
