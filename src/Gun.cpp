@@ -3,12 +3,14 @@
 
 #include <iostream>
 
-Bullet::Bullet()
+Bullet::Bullet(Vector2f pos, float rotate)
     : bullet(Texture("img/bullet/bullet.png"))
 {
-    vitesse = 5.0f;
-    // set update
-    // A AMELIORER
+    position = pos;
+    angle_de_tir = rotate + M_PI;
+    bullet.setPosition(position);
+    bullet.setRotation(angle_de_tir);
+    vitesse = 1.0f;
 }
 
 Gun::Gun()
@@ -21,8 +23,8 @@ Gun::Gun()
     gun.setAlpha(0);
     set_position(position);
     set_rotation(rotation);
-    gun.setSize(Vector2f(40.0f, 59.0f));
-    gun.setOrigin(Vector2f(20.0f, 59.0f/2));
+    gun.setSize(Vector2f(60.0f, 88.5f));
+    gun.setOrigin(Vector2f(60.0f/2, 88.5f/2));
 
 }
 
@@ -36,8 +38,8 @@ Gun::Gun(float gun_rotation, Vector2f gun_position)
     gun.setAlpha(0);
     set_position(position);
     set_rotation(rotation);
-    gun.setSize(Vector2f(40.0f, 59.0f));
-    gun.setOrigin(Vector2f(20.0f, 59.0f/2));
+    gun.setSize(Vector2f(60.0f, 88.5f));
+    gun.setOrigin(Vector2f(60.0f/2, 88.5f/2));
 
     for(int i = 1; i < 7; i++){
         std::string filename = "img/gunshot/gunshot" + std::to_string(i) + ".png";
@@ -51,12 +53,6 @@ Gun::Gun(float gun_rotation, Vector2f gun_position)
         Texture toadd(filename.c_str());
         textures[1].push_back(toadd);
     }
-}
-
-void Bullet::deplacement(){
-    bullet.move(Vector2f(vitesse, vitesse));
-    position.x = position.x + vitesse;
-    position.y = position.y + vitesse;
 }
 
 void Gun::set_rotation(float car_rotation){
@@ -82,16 +78,26 @@ std::vector<Bullet> Gun::get_bullet(){
     return(balles);
 }
 
+int Gun::get_capacite_actuelle(){
+    return(capacite_actuelle);
+}
+
+int Gun::get_max_capacite(){
+    return(max_capacite);
+}
+
 void Gun::update(Car car){
-    set_position(car.get_pos());
+    set_position(Vector2f(car.get_pos().x - 5.0f, car.get_pos().y + 5.0f));
     set_rotation(car.get_rotation());
-    for (int i = 0; i < (max_capacite - capacite_actuelle); i++){
+    for (int i = 0; i < balles.size(); i++){
         balles[i].update();
     }
 }
 
 void Bullet::update(){
-    deplacement();
+    position.x = position.x + direction.x*vitesse;
+    position.y = position.y + direction.y*vitesse;
+    bullet.setPosition(position);
 }
 
 void Gun::animate(int i){
@@ -128,9 +134,9 @@ if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS){
     if(capacite_actuelle == 0) return;
     else{
         shooted = true;
-        Bullet B;
-        B.angle_de_tir = rotation;
-        B.position = position;
+        Bullet B(position, rotation);
+        B.direction = Vector2f(cos(rotation + M_PI/2.0f), sin(rotation + M_PI/2.0f));
+        std::cout << B.direction.x << " " << B.direction.y << std::endl;
         balles.push_back(B);
     }
 }
@@ -142,5 +148,8 @@ void Bullet::Draw(GLint renderModeLoc) const
 
 void Gun::Draw(GLint renderModeLoc) const
 {
-  gun.Draw(renderModeLoc);
+    for (int i = 0; i<balles.size(); i++){
+      balles[i].Draw(renderModeLoc);
+    }
+    gun.Draw(renderModeLoc);
 }
