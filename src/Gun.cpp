@@ -141,7 +141,7 @@ void Gun::update(Car car){
     }
 }
 
-void Bullet::update(Gun gun, Car car){
+void Bullet::update(Car car){
     deplacement();
     position = car.get_pos();
 }
