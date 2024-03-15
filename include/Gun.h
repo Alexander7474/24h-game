@@ -16,7 +16,7 @@ class Bullet : public BbopDrawable
         Sprite bullet;
         Bullet();
         void deplacement();
-        void update();
+        void update(Gun, Car);
 
         void Draw(GLint renderModeLoc) const override;
 };
@@ -37,7 +37,7 @@ class Gun : public BbopDrawable
         std::vector<Bullet> balles;
         Texture base;
         Sprite gun;
-        void tirer();
+        void tirer(Car);
         void recharger();
         void set_rotation(float);
         void set_position(Vector2f);
