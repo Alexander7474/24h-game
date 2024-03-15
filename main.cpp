@@ -10,9 +10,15 @@
 
 #include "include/Game.h"
 
+using namespace irrklang;
+
 int main () {
   GLFWwindow *window;
   bbopInit(720, 480, "24h game", window);
+
+  ISoundEngine *SoundEngine = createIrrKlangDevice();
+  SoundEngine->addSoundSourceFromFile("Musique/24h-pour-coder.wav", ESM_AUTO_DETECT, true);
+  SoundEngine->play2D("Musique/24h-pour-coder.wav", true);
   ////////////////////////////////////////
   ///Game var and obj
   ////////////////////////////////////////

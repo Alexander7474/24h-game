@@ -39,10 +39,16 @@ Car::Car(std::string new_fold_name, Vector2f new_position, float new_rotation, f
     textures[2].push_back(toadd);
   }
   for(int i = 0; i < 3; i++){
-    std::string filename = fold_name + "/0/" + std::to_string(i) + ".png";
+    std::string filename = fold_name + "/10/" + std::to_string(i) + ".png";
     std::cout << filename << std::endl;
     Texture toadd(filename.c_str());
     textures[3].push_back(toadd);
+  }
+  for(int i = 0; i < 1; i++){
+    std::string filename = fold_name + "/0/" + std::to_string(i) + ".png";
+    std::cout << filename << std::endl;
+    Texture toadd(filename.c_str());
+    textures[4].push_back(toadd);
   }
   sprite.setSize(Vector2f(50.0f,50.0f));
   sprite.setOrigin(Vector2f(sprite.getSize().x/2.0f,sprite.getSize().y/2.0f));
@@ -52,7 +58,7 @@ Car::Car(std::string new_fold_name, Vector2f new_position, float new_rotation, f
 
 void Car::accelerate()
 {
-  if(state != 3){
+  if(state != 4){
     float angle = rotation+M_PI/2.0f;
     Vector2f dep(cos(angle),sin(angle));
     speed.x+=dep.x*max_speed;speed.y+=dep.y*max_speed;
@@ -61,7 +67,7 @@ void Car::accelerate()
 
 void Car::decelerate()
 {
-  if(state != 3){
+  if(state != 4){
     float angle = rotation+M_PI/2.0f;
     Vector2f dep(cos(angle),sin(angle));
     speed.x-=dep.x*max_speed_reverse;speed.y-=dep.y*max_speed_reverse;
@@ -70,13 +76,13 @@ void Car::decelerate()
 
 void Car::go_right()
 {
-  if(state !=3)
+  if(state !=4)
     rotation+=max_speed/2.0f;
 }
 
 void Car::go_left()
 {
-  if(state != 3)
+  if(state != 4)
     rotation-=max_speed/2.0f;
 }
 
@@ -87,10 +93,12 @@ void Car::update()
     state = 0;
   }else if(life > 25.0f){
     state = 1;
-  }else if(life > 0.0f){
+  }else if(life > 10.0f){
     state = 2;
-  }else {
+  }else if(life > 0.0f){
     state = 3;
+  }else {
+    state = 4;
   }
   speed.x*=0.95f;speed.y*=0.95f;
   anim_state++;

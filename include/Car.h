@@ -31,7 +31,7 @@ public:
   void Draw(GLint renderModLoc) const override;
   void update();
 private: 
-  std::vector<Texture> textures[4];
+  std::vector<Texture> textures[5];
   Vector2f pos;
   float rotation;
   Vector2f speed;

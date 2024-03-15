@@ -30,7 +30,6 @@ void Game::Draw(GLint renderModeLoc) const
 
 void Game::update(GLFWwindow *window)
 {
-  std::cout << cars[0].get_life() << std::endl; 
   // check des touches pour cars[0]
   if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
     cars[0].accelerate();
@@ -63,7 +62,6 @@ void Game::update(GLFWwindow *window)
         while (iAngle > M_PI) iAngle -= 2.0 * M_PI;
         while (iAngle <= -M_PI) iAngle += 2.0 * M_PI;
         if(cars[y].get_life() > 0.0 && cars[i].get_life() > 0.0){
-          std::cout << iAngle << " " << yAngle << std::endl;
           if(cars[y].get_sprite()->getCollisionBox()->check(cars[i].get_sprite()->getCollisionBox())&& glfwGetTime()-cars[y].get_last_hit()>1.5&& glfwGetTime()-cars[i].get_last_hit()>1.5){
             if(std::abs(yAngle) <= 1.0f){
               cars[y].set_speed(Vector2f(-cars[y].get_speed().x*1.2f,-cars[y].get_speed().y*1.2f));
