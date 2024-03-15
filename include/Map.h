@@ -14,8 +14,8 @@ private:
     Sprite obs;
     int x;
     int y;
-    int offsetx = 200 ;
-    int offsety = 150 ;
+    int offsetx = 100 ;
+    int offsety = 75 ;
     int random_pos_x;
     int random_pos_y;
 public:
