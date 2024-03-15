@@ -40,10 +40,6 @@ Map::Map()
     }
 
     map_s.setSize(Vector2f(BBOP_WINDOW_SIZE.x, BBOP_WINDOW_SIZE.y));
-
-
-
-
 }
 
 std::vector<Obstacle> Map::get_obst()

@@ -54,6 +54,7 @@ Car::Car(std::string new_fold_name, Vector2f new_position, float new_rotation, f
   sprite.setOrigin(Vector2f(sprite.getSize().x/2.0f,sprite.getSize().y/2.0f));
   sprite.setPosition(pos);
   sprite.setColor(Vector3i(500,500,500));
+  sprite.setTexture(textures[state][anim_state]);
 }
 
 void Car::accelerate()

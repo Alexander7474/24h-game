@@ -35,7 +35,7 @@ int main () {
   
   Scene defaultScene;
   Font font(48, "fonts/arial.ttf");
-  Game game(5,SoundEngine,font);
+  Game game(2,SoundEngine,font);
   ////////////////////////////////////////
   ///End var and obj
   ////////////////////////////////////////
@@ -68,7 +68,10 @@ int main () {
 
     else
     {
-      game.update(window);
+      int x = game.update(window);
+      if( x > 0){
+        game = Game(x+1,SoundEngine,font);
+      }
       defaultScene.Draw(game);
     }
     

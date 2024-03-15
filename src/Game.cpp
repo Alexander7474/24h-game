@@ -1,5 +1,6 @@
 #include "../include/Game.h"
 #include <GLFW/glfw3.h>
+#include <cmath>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
@@ -14,7 +15,8 @@ Game::Game(int n_en, irrklang::ISoundEngine* n_sound, Font &font)
     sound(n_sound),
     starter(300),
     texte("test",&font),
-    triangle(3,15.0f)
+    triangle(3,15.0f),
+    round(n_en-1)
 {
   texte.setPosition(Vector2f(350.0f,200.0f));
   triangle.setRotation(M_PI/2.0f);
@@ -23,11 +25,13 @@ Game::Game(int n_en, irrklang::ISoundEngine* n_sound, Font &font)
   for(int i = 0; i< cars_size ; i++){
     float speed = 0.15f;
     float life = 100.0f;
+    std::string carfile = "img/bleu_car";
     if(i == 0){
       speed = 0.2f;
-      life = 150.0f;
+      life = 100.0f;
+      carfile = "img/red_car";
     } 
-    Car car("img/bleu_car", Vector2f(static_cast<float>(rand()%600)+100.0f,static_cast<float>(rand() %300)+100.0f), 0.0f, speed, life);
+    Car car(carfile.c_str(), Vector2f(static_cast<float>(rand()%550)+100.0f,static_cast<float>(rand() %300)+100.0f), 0.0f, speed, life);
     cars.push_back(car);
     Gun gun(0.0f, car.get_pos());
     guns.push_back(gun);
@@ -45,17 +49,25 @@ void Game::Draw(GLint renderModeLoc) const
     triangle.Draw(renderModeLoc);
     texte.Draw(renderModeLoc);
   }
+  if(starter == -100){
+    texte.Draw(renderModeLoc);
+  }
 }
 
-void Game::update(GLFWwindow *window)
+int Game::update(GLFWwindow *window)
 {
+  if(cars[0].get_life() <= 0.0f){
+    texte.setPosition(Vector2f(275.0f,200.0f));
+    texte.setTexte("Game over");
+    starter = -100;
+    return round-1;
+  }
   if(starter > 0){
     triangle.setPosition(cars[0].get_pos());
-    std::cout << starter << std::endl;
     starter--;
     std::string timer = std::to_string(starter/60);
     texte.setTexte(timer.c_str());
-    return;
+    return 0;
   }
   // check des touches pour cars[0]
   if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
@@ -76,6 +88,7 @@ void Game::update(GLFWwindow *window)
   if(glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS){
     guns[0].reload();
   }
+  int total_dead = 0;
   for(int i = 1; i < cars_size; i++){
     int car1 = i;int car2 = i+1;
     if(car2 >= cars_size)
@@ -88,10 +101,14 @@ void Game::update(GLFWwindow *window)
       if(cpt > cars_size)
         exit(0);
     }
+    if(cars[i].get_life() <= 0.0f)
+      total_dead++;
     bot.play(&cars[car1], &guns[car1], &cars[car2], sound);
     cars[car1].update();
     guns[car1].update(cars[car1]);
   }
+  if(total_dead == cars_size-1)
+    return round+1;
   cars[0].update();
   guns[0].update(cars[0]);
   for(int y = 0; y < cars_size; y++){
@@ -140,4 +157,5 @@ void Game::update(GLFWwindow *window)
     if(cars[y].get_pos().y < 90.0f)
       cars[y].set_speed(Vector2f(0.0f,1.0f));
   }
+  return 0;
 }

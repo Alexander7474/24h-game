@@ -20,7 +20,7 @@ class Game : public BbopDrawable
 public:
   Game(int n_en, irrklang::ISoundEngine* n_sound, Font &font);
 
-  void update(GLFWwindow *window);
+  int update(GLFWwindow *window);
   virtual void Draw(GLint renderModeLoc) const override;
 private:
   Map map;
@@ -32,4 +32,5 @@ private:
   int starter;
   TexteBox texte;
   CircleShape triangle;
+  int round;
 };
