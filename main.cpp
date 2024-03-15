@@ -42,6 +42,7 @@ int main () {
 
   while(!glfwWindowShouldClose(window)){
     bbopCleanWindow(window, Vector3i(0,0,0), 1.0f);
+    std::srand(time(NULL));
     ///////////////////////////////////////////////
     ///Game loop start
     ///////////////////////////////////////////////

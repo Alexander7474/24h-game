@@ -14,7 +14,6 @@ Bot::Bot(int new_diff_level)
 
 void Bot::play(Car *car, Gun *gun, Car *player, irrklang::ISoundEngine* sound)
 {
-  std::srand(time(NULL));
   Vector2f carPos = car->get_pos();
   Vector2f playerPos = player->get_pos();
   float angle = atan2(playerPos.y-carPos.y, playerPos.x-carPos.x);
