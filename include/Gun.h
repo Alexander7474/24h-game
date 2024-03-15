@@ -15,7 +15,7 @@ class Bullet : public BbopDrawable
         float vitesse;
         Sprite bullet;
         Bullet();
-        void deplacement();
+        Bullet(Vector2f, float);
         void update();
 
         void Draw(GLint renderModeLoc) const override;
@@ -40,6 +40,8 @@ class Gun : public BbopDrawable
         void set_position(Vector2f);
         float get_rotation();
         Vector2f get_position();
+        int get_capacite_actuelle();
+        int get_max_capacite();
         std::vector<Bullet> get_bullet();
         void update(Car);
         void animate(int);
