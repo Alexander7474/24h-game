@@ -7,7 +7,7 @@
 
 Game::Game()
   : bot(0),
-    cars_size(3)
+    cars_size(20)
 {
   std::srand(time(NULL));
   for(int i = 0; i< cars_size ; i++){
@@ -19,14 +19,18 @@ Game::Game()
     } 
     Car car("img/bleu_car", Vector2f(static_cast<float>(rand()%600)+100.0f,static_cast<float>(rand() %300)+100.0f), 0.0f, speed, life);
     cars.push_back(car);
+    Gun gun(0.0f, car.get_pos());
+    guns.push_back(gun);
   }
 }
 
 void Game::Draw(GLint renderModeLoc) const
 {
   map.Draw(renderModeLoc);
-  for(int i = cars_size-1; i >= 0; i--)
+  for(int i = cars_size-1; i >= 0; i--){
     cars[i].Draw(renderModeLoc);
+    guns[i].Draw(renderModeLoc);
+  }
 }
 
 void Game::update(GLFWwindow *window)
@@ -44,7 +48,6 @@ void Game::update(GLFWwindow *window)
   if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
     cars[0].go_left();
   }
-  std::cout << "===================" << std::endl;
   for(int i = 1; i < cars_size; i++){
     int car1 = i;int car2 = i+1;
     if(car2 >= cars_size)
@@ -57,11 +60,12 @@ void Game::update(GLFWwindow *window)
       if(cpt > cars_size)
         exit(0);
     }
-    std::cout << car1 << " " << car2 << std::endl;
     bot.play(&cars[car1], &cars[car2]);
     cars[car1].update();
+    guns[car1].update(cars[car1]);
   }
   cars[0].update();
+  guns[0].update(cars[0]);
   for(int y = 0; y < cars_size; y++){
     for(int i = 0; i < cars_size; i++){
       if (i!=y){

@@ -10,6 +10,7 @@
 #include "Map.h"
 #include "Car.h"
 #include "Bot.h"
+#include "Gun.h"
 
 class Game : public BbopDrawable 
 {
@@ -22,5 +23,6 @@ private:
   Map map;
   Bot bot;
   std::vector<Car> cars;
+  std::vector<Gun> guns;
   int cars_size;
 };

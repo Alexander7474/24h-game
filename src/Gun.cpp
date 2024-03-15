@@ -43,13 +43,11 @@ Gun::Gun(float gun_rotation, Vector2f gun_position)
 
     for(int i = 1; i < 7; i++){
         std::string filename = "img/gunshot/gunshot" + std::to_string(i) + ".png";
-        std::cout << filename << std::endl;
         Texture toadd(filename.c_str());
         textures[0].push_back(toadd);
     }
     for(int i = 1; i < 7; i++){
         std::string filename = "img/reload/reload" + std::to_string(i) + ".png";
-        std::cout << filename << std::endl;
         Texture toadd(filename.c_str());
         textures[1].push_back(toadd);
     }
@@ -62,7 +60,6 @@ void Gun::set_rotation(float car_rotation){
 
 void Gun::set_position(Vector2f car_position){
     position = car_position;
-    std::cout<<car_position.x<<" "<<car_position.y<<" "<<position.x<<" "<<position.y<< std::endl;
     gun.setPosition(position);
 }
 
@@ -89,7 +86,11 @@ int Gun::get_max_capacite(){
 void Gun::update(Car car){
     set_position(Vector2f(car.get_pos().x - 5.0f, car.get_pos().y + 5.0f));
     set_rotation(car.get_rotation());
+<<<<<<< HEAD
     for (int i = 0; i < balles.size(); i++){
+=======
+    for (int i = 0; i < (max_capacite - capacite_actuelle); i++){
+>>>>>>> 37610fd (ia)
         balles[i].update();
     }
 }
@@ -148,8 +149,13 @@ void Bullet::Draw(GLint renderModeLoc) const
 
 void Gun::Draw(GLint renderModeLoc) const
 {
+<<<<<<< HEAD
     for (int i = 0; i<balles.size(); i++){
       balles[i].Draw(renderModeLoc);
     }
     gun.Draw(renderModeLoc);
 }
+=======
+  gun.Draw(renderModeLoc);
+}
+>>>>>>> 37610fd (ia)
