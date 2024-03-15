@@ -39,14 +39,14 @@ Gun::Gun(float gun_rotation, Vector2f gun_position)
     gun.setSize(Vector2f(40.0f, 59.0f));
     gun.setOrigin(Vector2f(20.0f, 59.0f/2));
 
-    for(int i = 0; i < 6; i++){
-        std::string filename = "/img/gunshot/gunshot" + std::to_string(i) + ".png";
+    for(int i = 1; i < 7; i++){
+        std::string filename = "img/gunshot/gunshot" + std::to_string(i) + ".png";
         std::cout << filename << std::endl;
         Texture toadd(filename.c_str());
         textures[0].push_back(toadd);
     }
-    for(int i = 0; i < 6; i++){
-        std::string filename = "/img/reload/reload" + std::to_string(i) + ".png";
+    for(int i = 1; i < 7; i++){
+        std::string filename = "img/reload/reload" + std::to_string(i) + ".png";
         std::cout << filename << std::endl;
         Texture toadd(filename.c_str());
         textures[1].push_back(toadd);
@@ -144,6 +144,12 @@ void Gun::update(Car car){
 void Bullet::update(Car car){
     deplacement();
     position = car.get_pos();
+}
+
+void Gun::animate(){
+    gun.setTexture(textures[0][anim_state]);
+    if (anim_state == 5) anim_state = 0;
+    else  anim_state ++;
 }
 
 void Bullet::Draw(GLint renderModeLoc) const
