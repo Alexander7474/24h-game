@@ -149,14 +149,22 @@ int Game::update(GLFWwindow *window)
         }
       }
     }
-    if (cars[y].get_pos().x > 640.0f)
+    if (cars[y].get_pos().x > 640.0f){
       cars[y].set_speed(Vector2f(-1.0f,0.0f));
-    if(cars[y].get_pos().y > 415.0f)
+      cars[y].damage(1.0);
+    }
+    if(cars[y].get_pos().y > 415.0f){
       cars[y].set_speed(Vector2f(0.0f,-1.0f));
-    if (cars[y].get_pos().x < 85.0f)
+      cars[y].damage(1.0);
+    }
+    if (cars[y].get_pos().x < 85.0f){
       cars[y].set_speed(Vector2f(1.0f,0.0f));
-    if(cars[y].get_pos().y < 90.0f)
+      cars[y].damage(1.0);
+    }
+    if(cars[y].get_pos().y < 90.0f){
       cars[y].set_speed(Vector2f(0.0f,1.0f));
+      cars[y].damage(1.0);
+    }
   }
   return 0;
 }
