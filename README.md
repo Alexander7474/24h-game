@@ -1,6 +1,6 @@
 # RSA-Derby
 
-Jeu 2D de destruction de voiture fait lors des 24 pour coder 2024 du CERI
+Jeu 2D de destruction de voiture fait lors des 24h pour coder 2024 du CERI
 
 ## Libs
 
